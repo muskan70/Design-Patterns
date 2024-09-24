@@ -14,8 +14,9 @@ type TV struct {
 var tv *TV
 
 var lock = &sync.Mutex{}
+var once = &sync.Once{}
 
-func getTvInstance() *TV {
+func getTvInstanceUsingMutex() *TV {
 	if tv == nil {
 		lock.Lock()
 		defer lock.Unlock()
@@ -28,5 +29,14 @@ func getTvInstance() *TV {
 	} else {
 		fmt.Println("Tv Instance already present")
 	}
+	return tv
+}
+
+func getTvInstanceUsingOnce() *TV {
+	once.Do(func() {
+		fmt.Println("creating Instance")
+		tv = &TV{status: "OFF", curChannel: 1, curVolume: 1}
+	})
+	fmt.Println("Tv Instance returning")
 	return tv
 }

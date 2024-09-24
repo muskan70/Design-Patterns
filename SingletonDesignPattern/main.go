@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	for i := 0; i < 10; i++ {
-		go getTvInstance()
+		go getTvInstanceUsingOnce()
 	}
 	fmt.Scanln()
 }
